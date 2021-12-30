@@ -2,4 +2,4 @@
 
 ## Learning and brushing up CS fundamentles by building Android apps/games.
 
-Source Link ([Applied CS Skills] (https://appliedcsskills.withgoogle.com/index.html))
+Source Link ([Applied CS Skills](https://appliedcsskills.withgoogle.com/index.html))
