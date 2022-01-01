@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     Stack<LetterTile> placedTiles = new Stack<LetterTile>();
 
+    private LinearLayout word1LinearLayout;
+    private LinearLayout word2LinearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
         stackedLayout = new StackedLayout(this);
         verticalLayout.addView(stackedLayout, 3);
 
-        View word1LinearLayout = findViewById(R.id.word1);
+        word1LinearLayout = findViewById(R.id.word1);
         word1LinearLayout.setOnTouchListener(new TouchListener());
-        //word1LinearLayout.setOnDragListener(new DragListener());
-        View word2LinearLayout = findViewById(R.id.word2);
+        word1LinearLayout.setOnDragListener(new DragListener());
+        word2LinearLayout = findViewById(R.id.word2);
         word2LinearLayout.setOnTouchListener(new TouchListener());
-        //word2LinearLayout.setOnDragListener(new DragListener());
+        word2LinearLayout.setOnDragListener(new DragListener());
     }
 
     private class TouchListener implements View.OnTouchListener {
@@ -135,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                      **  YOUR CODE GOES HERE
                      **
                      **/
+                    placedTiles.push(tile);
                     return true;
             }
             return false;
@@ -142,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onStartGame(View view) {
+        word1LinearLayout.removeAllViews();
+        word2LinearLayout.removeAllViews();
+
         TextView messageBox = (TextView) findViewById(R.id.message_box);
         messageBox.setText("Game started");
 
@@ -192,8 +199,11 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onUndo(View view) {
 
-        LetterTile poppedTile = placedTiles.pop();
-        poppedTile.moveToViewGroup(stackedLayout);
-        return true;
+        if (!placedTiles.empty()) {
+            LetterTile poppedTile = placedTiles.pop();
+            poppedTile.moveToViewGroup(stackedLayout);
+            return true;
+        }
+        return false;
     }
 }
