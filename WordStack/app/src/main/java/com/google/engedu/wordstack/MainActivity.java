@@ -37,13 +37,15 @@ import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int WORD_LENGTH = 5;
+    private static final int WORD_LENGTH = 3;
     public static final int LIGHT_BLUE = Color.rgb(176, 200, 255);
     public static final int LIGHT_GREEN = Color.rgb(200, 255, 200);
     private ArrayList<String> words = new ArrayList<>();
     private Random random = new Random();
     private StackedLayout stackedLayout;
     private String word1, word2;
+
+    Stack<LetterTile> placedTiles = new Stack<LetterTile>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,9 @@ public class MainActivity extends AppCompatActivity {
             String line = null;
             while((line = in.readLine()) != null) {
                 String word = line.trim();
-                /**
-                 **
-                 **  YOUR CODE GOES HERE
-                 **
-                 **/
+                if (word.length() == WORD_LENGTH) {
+                    words.add(word);
+                }
             }
         } catch (IOException e) {
             Toast toast = Toast.makeText(this, "Could not load dictionary", Toast.LENGTH_LONG);
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                  **  YOUR CODE GOES HERE
                  **
                  **/
+                placedTiles.push(tile);
                 return true;
             }
             return false;
@@ -143,20 +144,56 @@ public class MainActivity extends AppCompatActivity {
     public boolean onStartGame(View view) {
         TextView messageBox = (TextView) findViewById(R.id.message_box);
         messageBox.setText("Game started");
-        /**
-         **
-         **  YOUR CODE GOES HERE
-         **
-         **/
+
+
+        int randomNumber = random.nextInt(words.size());
+        word1 = words.get(randomNumber);
+
+        do {
+            randomNumber = random.nextInt(words.size());
+            word2 = words.get(randomNumber);
+        } while (word1.equals(word2));
+
+        System.out.println(word1);
+        System.out.println(word2);
+
+        String scrambledWord = "";
+        int i = 0, j = 0;
+
+        while (i < word1.length() || j < word2.length()) {
+            if (i >= word1.length() && j < word2.length()) {
+                scrambledWord = scrambledWord + word2.charAt(j);
+                j += 1;
+            } else if (i < word1.length() && j >= word2.length()) {
+                scrambledWord = scrambledWord + word1.charAt(i);
+                i += 1;
+            } else {
+                int r = random.nextInt(2);
+                if (r == 0) {
+                    scrambledWord = scrambledWord + word1.charAt(i);
+                    i += 1;
+                } else {
+                    scrambledWord = scrambledWord + word2.charAt(j);
+                    j += 1;
+                }
+            }
+        }
+
+        System.out.println(scrambledWord);
+        messageBox.setText(scrambledWord);
+
+        for (int index = scrambledWord.length()-1; index >= 0; index--){
+            LetterTile lt = new LetterTile(this, scrambledWord.charAt(index));
+            stackedLayout.push(lt);
+        }
+
         return true;
     }
 
     public boolean onUndo(View view) {
-        /**
-         **
-         **  YOUR CODE GOES HERE
-         **
-         **/
+
+        LetterTile poppedTile = placedTiles.pop();
+        poppedTile.moveToViewGroup(stackedLayout);
         return true;
     }
 }
