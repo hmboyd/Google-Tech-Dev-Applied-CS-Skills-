@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void computerTurn() {
-        System.out.println("Inside Computer Turen");
+        System.out.println("Inside Computer Turn");
 
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
