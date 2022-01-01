@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             computerTurn();
         } else {
             userCurrentScore += randomNumber + 1;
-            String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore + " your turn score: " + userCurrentScore;
+            String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore + "\nyour turn score: " + userCurrentScore;
             scoreDisplayText.setText(scoreText);
         }
 
@@ -79,27 +80,22 @@ public class MainActivity extends AppCompatActivity {
 
         String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore;
         scoreDisplayText.setText(scoreText);
+
+        rollBtn.setEnabled(true);
+        holdBtn.setEnabled(true);
     }
 
     public void computerTurn() {
+        System.out.println("Inside Computer Turen");
 
-        while (true) {
-            int randomNumber = r.nextInt(6);
-            imageView.setImageResource(diceFaceList[randomNumber]);
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int randomNumber = r.nextInt(6);
+                imageView.setImageResource(diceFaceList[randomNumber]);
 
-            if (randomNumber == 0) {
-                computerTotalScore += computerCurrentScore;
-                String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore;
-                computerCurrentScore = 0;
-                scoreDisplayText.setText(scoreText);
-
-                rollBtn.setEnabled(true);
-                holdBtn.setEnabled(true);
-                break;
-            } else {
-                computerCurrentScore += randomNumber + 1;
-
-                if (computerCurrentScore >= 20) {
+                if (randomNumber == 0) {
                     computerTotalScore += computerCurrentScore;
                     String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore;
                     computerCurrentScore = 0;
@@ -107,13 +103,29 @@ public class MainActivity extends AppCompatActivity {
 
                     rollBtn.setEnabled(true);
                     holdBtn.setEnabled(true);
-                    break;
+                    return;
                 } else {
-                    String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore + " computer turn score: " + computerCurrentScore;
-                    scoreDisplayText.setText(scoreText);
+                    computerCurrentScore += randomNumber + 1;
+
+                    if (computerCurrentScore >= 20) {
+                        computerTotalScore += computerCurrentScore;
+                        String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore;
+                        computerCurrentScore = 0;
+                        scoreDisplayText.setText(scoreText);
+
+                        rollBtn.setEnabled(true);
+                        holdBtn.setEnabled(true);
+                        return;
+                    } else {
+                        String scoreText = "Your score: " + userTotalScore + " computer score: " + computerTotalScore + "\ncomputer turn score: " + computerCurrentScore;
+                        scoreDisplayText.setText(scoreText);
+                    }
                 }
+                handler.postDelayed(this, 1000);
             }
-        }
+        };
+        handler.postDelayed(runnable, 0);
+
     }
 
 }
