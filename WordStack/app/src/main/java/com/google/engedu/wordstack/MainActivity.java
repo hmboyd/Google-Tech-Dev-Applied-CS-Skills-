@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onStartGame(View view) {
         word1LinearLayout.removeAllViews();
         word2LinearLayout.removeAllViews();
+        stackedLayout.clear();
 
         TextView messageBox = (TextView) findViewById(R.id.message_box);
         messageBox.setText("Game started");
@@ -202,8 +203,7 @@ public class MainActivity extends AppCompatActivity {
         if (!placedTiles.empty()) {
             LetterTile poppedTile = placedTiles.pop();
             poppedTile.moveToViewGroup(stackedLayout);
-            return true;
         }
-        return false;
+        return true;
     }
 }
