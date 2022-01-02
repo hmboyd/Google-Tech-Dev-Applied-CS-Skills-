@@ -51,19 +51,33 @@ public class TourMap extends View {
          **  YOUR CODE GOES HERE
          **
          **/
+        Point prevPoint = null;
+        boolean first = true;
+        Point firstPoint = null;
         for (Point p : list) {
             /**
              **
              **  YOUR CODE GOES HERE
              **
              **/
+            if (first) {
+                firstPoint = p;
+                first = false;
+            }
+            if (prevPoint != null) {
+                canvas.drawLine(prevPoint.x, prevPoint.y, p.x, p.y, pointPaint);
+            }
             canvas.drawCircle(p.x, p.y, 20, pointPaint);
+            prevPoint = p;
         }
         /**
          **
          **  YOUR CODE GOES HERE
          **
          **/
+        if (prevPoint != null && firstPoint != null) {
+            canvas.drawLine(prevPoint.x, prevPoint.y, firstPoint.x, firstPoint.y, pointPaint);
+        }
     }
 
     @Override
