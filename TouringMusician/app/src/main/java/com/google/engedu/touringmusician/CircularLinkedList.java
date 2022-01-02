@@ -47,7 +47,6 @@ public class CircularLinkedList implements Iterable<Point> {
         if (head == null) {
             head = new Node(p);
 
-
         } else {
             Node newNode = new Node(p);
 
@@ -131,11 +130,7 @@ public class CircularLinkedList implements Iterable<Point> {
     }
 
     public void insertSmallest(Point p) {
-        /**
-         **
-         **  YOUR CODE GOES HERE
-         **
-         **/
+
         if (head == null) {
             head = new Node(p);
         } else if (head.next == null) {
