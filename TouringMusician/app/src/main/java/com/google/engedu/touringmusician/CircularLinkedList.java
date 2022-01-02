@@ -96,6 +96,38 @@ public class CircularLinkedList implements Iterable<Point> {
          **  YOUR CODE GOES HERE
          **
          **/
+        if (head == null) {
+            head = new Node(p);
+        } else {
+            float minDistance = Float.MAX_VALUE;
+
+            Node tempNode = head;
+            Node minDistanceNode = null;
+
+            while (tempNode != null) {
+                float distance = distanceBetween(tempNode.point, p);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minDistanceNode = tempNode;
+                }
+                tempNode = tempNode.next;
+            }
+
+            if (minDistanceNode.next != null) {
+                Node nextNode = minDistanceNode.next;
+                Node newNode = new Node(p);
+
+                minDistanceNode.next = newNode;
+                newNode.prev = minDistanceNode;
+                newNode.next = nextNode;
+            } else {
+                Node newNode = new Node(p);
+
+                minDistanceNode.next = newNode;
+                newNode.prev = minDistanceNode;
+            }
+
+        }
     }
 
     public void insertSmallest(Point p) {

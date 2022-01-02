@@ -51,6 +51,9 @@ public class TourMap extends View {
          **  YOUR CODE GOES HERE
          **
          **/
+        Paint linePaint = new Paint();
+        linePaint.setColor(Color.BLACK);
+
         Point prevPoint = null;
         boolean first = true;
         Point firstPoint = null;
@@ -65,7 +68,7 @@ public class TourMap extends View {
                 first = false;
             }
             if (prevPoint != null) {
-                canvas.drawLine(prevPoint.x, prevPoint.y, p.x, p.y, pointPaint);
+                canvas.drawLine(prevPoint.x, prevPoint.y, p.x, p.y, linePaint);
             }
             canvas.drawCircle(p.x, p.y, 20, pointPaint);
             prevPoint = p;
@@ -76,7 +79,7 @@ public class TourMap extends View {
          **
          **/
         if (prevPoint != null && firstPoint != null) {
-            canvas.drawLine(prevPoint.x, prevPoint.y, firstPoint.x, firstPoint.y, pointPaint);
+            canvas.drawLine(prevPoint.x, prevPoint.y, firstPoint.x, firstPoint.y, linePaint);
         }
     }
 
