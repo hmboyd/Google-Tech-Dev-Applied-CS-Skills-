@@ -43,6 +43,20 @@ public class TreeNode {
          **  YOUR CODE GOES HERE
          **
          **/
+        if (valueToInsert < value) {
+            if (this.left == null) {
+                this.left = new TreeNode(valueToInsert);
+            } else {
+                this.left.insert(valueToInsert);
+            }
+        } else {
+            if (this.right == null) {
+                this.right = new TreeNode(valueToInsert);
+            } else {
+                this.right.insert(valueToInsert);
+            }
+        }
+
     }
 
     public int getValue() {
@@ -81,6 +95,7 @@ public class TreeNode {
         paint.setTextSize(SIZE * 2/3);
         paint.setTextAlign(Paint.Align.CENTER);
         c.drawText(showValue ? String.valueOf(value) : "?", x, y + SIZE * 3/4, paint);
+//        c.drawText(showValue ? String.valueOf(value) : String.valueOf(value), x, y + SIZE * 3/4, paint);
 
         if (height > 0) {
             Paint heightPaint = new Paint();
