@@ -84,6 +84,12 @@ public class BinaryTreeView extends View {
                         invalidate();
                         if (hitValue != targetValue) {
                             tree.invalidateNode(targetValue);
+                            for (int i = 0; i < searchSequence.size(); i++) {
+                                if (searchSequence.get(i) == hitValue) {
+                                    searchSequence.remove(i);
+                                    break;
+                                }
+                            }
                         }
                         searchPosition++;
                         updateMessage();
