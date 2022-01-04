@@ -56,7 +56,18 @@ public class BinarySearchTree {
          **  YOUR CODE GOES HERE
          **
          **/
-        return current;
+        while (current != null) {
+            if (current.getValue() == value) {
+                return current;
+            }
+            if (value < current.getValue()) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+
+        return null;
     }
 
     public void invalidateNode(int targetValue) {
