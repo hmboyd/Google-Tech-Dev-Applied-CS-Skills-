@@ -31,7 +31,7 @@ public class TreeNode {
 
     public TreeNode(int value) {
         this.value = value;
-        this.height = 0;
+        this.height = 1;
         showValue = false;
         left = null;
         right = null;
@@ -49,14 +49,21 @@ public class TreeNode {
             } else {
                 this.left.insert(valueToInsert);
             }
+
         } else {
             if (this.right == null) {
                 this.right = new TreeNode(valueToInsert);
             } else {
                 this.right.insert(valueToInsert);
             }
+
         }
 
+
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 
     public int getValue() {
