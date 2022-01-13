@@ -75,13 +75,80 @@ public class TreeNode {
 
         this.height = 1 + Math.max(leftHeight, rightHeight);
 
+        int balanceFactor = leftHeight - rightHeight;
+
+        if (balanceFactor > 1) {
+            // RR
+            if (valueToInsert < this.left.value) {
+                this.rightRotate();
+
+            // RL
+            } else if (valueToInsert > this.left.value) {
+                this.left.leftRotate();
+                this.rightRotate();
+            }
+        }
+
+        if (balanceFactor < -1) {
+            // LL
+            if (valueToInsert > this.right.value) {
+               this.leftRotate();
+
+            // LR
+            } else if (valueToInsert < this.right.value){
+                this.right.rightRotate();
+                this.leftRotate();
+            }
+        }
+
     }
 
     public int getHeight() {
-        if (this == null) {
+        return this.height;
+    }
+
+    private int getHeight(TreeNode node) {
+        if (node == null) {
             return 0;
         }
-        return this.height;
+        return node.height;
+    }
+
+    private void leftRotate() {
+
+        // swap the values
+        int temp = this.value;
+        this.value = this.right.getValue();
+        this.right.value = temp;
+
+        // perform rotation
+        TreeNode mid = this.right;
+        this.right = mid.right;
+        this.left = mid;
+        mid.right = mid.left;
+        mid.left = null;
+
+        mid.height = 1 + Math.max(getHeight(mid.left), getHeight(mid.right));
+        this.height = 1 + Math.max(getHeight(this.left), getHeight(this.right));
+    }
+
+    private void rightRotate() {
+
+        // swap the values
+        int temp = this.value;
+        this.value = this.left.getValue();
+        this.left.value = temp;
+
+        // perform rotation
+        TreeNode mid = this.left;
+        this.left = mid.left;
+        this.right = mid;
+        mid.left = mid.right;
+        mid.right = null;
+
+        mid.height = 1 + Math.max(getHeight(mid.left), getHeight(mid.right));
+        this.height = 1 + Math.max(getHeight(this.left), getHeight(this.right));
+
     }
 
     public int getValue() {
