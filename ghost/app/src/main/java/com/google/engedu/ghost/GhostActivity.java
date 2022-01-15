@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
@@ -38,6 +39,10 @@ public class GhostActivity extends AppCompatActivity {
     private boolean userTurn = false;
     private Random random = new Random();
 
+    private TextView fragment;
+    private TextView status;
+    SimpleDictionary sd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,14 @@ public class GhostActivity extends AppCompatActivity {
          **  YOUR CODE GOES HERE
          **
          **/
+        fragment = (TextView) findViewById(R.id.ghostText);
+        status = (TextView) findViewById(R.id.gameStatus);
+        try {
+            InputStream inputStream = getAssets().open("words.txt");
+            sd = new SimpleDictionary(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         onStart(null);
     }
 
@@ -113,6 +126,18 @@ public class GhostActivity extends AppCompatActivity {
          **  YOUR CODE GOES HERE
          **
          **/
+        if (keyCode >= 29 && keyCode <= 54){
+            fragment.append(String.valueOf(event.getDisplayLabel()).toLowerCase());
+            String fragmantWord = String.valueOf(fragment.getText());
+            System.out.println(fragmantWord);
+            if (sd.isWord(fragmantWord)) {
+                status.setText("Correct Word");
+            }
+        }
+        System.out.println("inside onKeyUp");
+        System.out.println(keyCode);
+        System.out.println(event.getDisplayLabel());
+        System.out.println(event);
         return super.onKeyUp(keyCode, event);
     }
 }

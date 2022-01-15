@@ -23,24 +23,44 @@
     android:id="@+id/ghost">
 
     <TextView
+        android:id="@+id/ghostText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="48sp"
-        android:id="@+id/ghostText"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textSize="48sp" />
 
     <TextView
+        android:id="@+id/gameStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Starting game"
-        android:id="@+id/gameStatus"
         android:layout_below="@+id/ghostText"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="Starting game"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gameStatus"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="CHALLENGE" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gameStatus"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/button"
+        android:text="RESTART" />
 
 
 </RelativeLayout>
