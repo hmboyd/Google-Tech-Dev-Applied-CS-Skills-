@@ -94,6 +94,7 @@ public class GhostActivity extends AppCompatActivity {
      */
     public boolean onStart(View view) {
         userTurn = random.nextBoolean();
+//        userTurn = true;
         TextView text = (TextView) findViewById(R.id.ghostText);
         text.setText("");
         TextView label = (TextView) findViewById(R.id.gameStatus);
@@ -106,9 +107,28 @@ public class GhostActivity extends AppCompatActivity {
         return true;
     }
 
+    public void onChallenge(View view){
+
+    }
+
     private void computerTurn() {
         TextView label = (TextView) findViewById(R.id.gameStatus);
         // Do computer turn stuff then make it the user's turn again
+        String fragmentWord = String.valueOf(fragment.getText());
+        if (fragmentWord.length() >= 4 && sd.isWord(fragmentWord)) {
+            label.setText("Computer Wins!");
+            return;
+        } else {
+            String otherWord = sd.getAnyWordStartingWith(fragmentWord);
+            if (otherWord == null) {
+                // challenge
+                label.setText("You can't bluff this computer.");
+                return;
+            } else {
+                fragment.append(String.valueOf(otherWord.charAt(fragmentWord.length())));
+            }
+        }
+
         userTurn = true;
         label.setText(USER_TURN);
     }
@@ -132,7 +152,11 @@ public class GhostActivity extends AppCompatActivity {
             System.out.println(fragmantWord);
             if (sd.isWord(fragmantWord)) {
                 status.setText("Correct Word");
+                return true;
             }
+            status.setText(COMPUTER_TURN);
+            userTurn = false;
+            computerTurn();
         }
         System.out.println("inside onKeyUp");
         System.out.println(keyCode);
