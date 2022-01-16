@@ -108,7 +108,26 @@ public class GhostActivity extends AppCompatActivity {
     }
 
     public void onChallenge(View view){
+        System.out.println("Challange clicked");
+        String fragmentWord = String.valueOf(fragment.getText());
 
+        if (fragmentWord.length() >= 4 && sd.isWord(fragmentWord)) {
+            status.setText("User Wins!");
+
+        } else {
+            String otherWord = sd.getAnyWordStartingWith(fragmentWord);
+            if (otherWord == null) {
+                // challenge
+                status.setText("User Wins!");
+            } else {
+                status.setText("Computer Wins!");
+            }
+        }
+    }
+
+    public void onRestart(View view) {
+        System.out.println("Restart clicked");
+        onStart(null);
     }
 
     private void computerTurn() {
